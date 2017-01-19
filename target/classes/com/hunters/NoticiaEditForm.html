@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<wicket:extend>
+	<div class="row">
+		<input type="hidden" wicket:id="id"/>
+		<div class="form-group">
+			<div class="fieldcontain col-md-10">
+				<label >Nome</label>
+		   		<input wicket:id="titulo" required  type="text" class="form-control" >
+			</div>
+			<div class="fieldcontain col-md-2">
+				<label >Data</label>
+		   		<input wicket:id="dataNoticia" required  type="text" class="form-control" >
+			</div>
+		 </div><br><br><br>
+		 <div class="form-group">
+		 	<div class="fieldcontain col-md-12">
+		 		<label >Conteúdo</label>
+		   		<textarea style="height: 200px;" wicket:id="conteudo" required  type="text" class="form-control" ></textarea>
+		 	</div>
+		 </div>
+	</div>
+</wicket:extend>
+</body>
+</html>

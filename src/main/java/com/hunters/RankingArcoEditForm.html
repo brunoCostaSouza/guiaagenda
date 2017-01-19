@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<wicket:extend>
+	<div class="row">
+		<input type="hidden" wicket:id="id"/>
+		<div class="form-group">
+			<div class="fieldcontain col-md-12">
+			   <label >Jogador</label>
+			   <select wicket:id="jogador" class="form-control" ></select>
+		   </div>
+		 </div>
+		 <div class="form-group">
+		 	<div class="fieldcontain col-md-6"><br>
+			   <label >Pontos</label>
+			   <input wicket:id="pontos" class="form-control" >
+		   	</div>
+		   	<div class="fieldcontain col-md-6"><br>
+			   	<label >Posição</label>
+			   	<input wicket:id="posicao" class="form-control" >
+		   	</div>
+		 </div>
+	</div><br>
+</wicket:extend>
+</body>
+</html>
