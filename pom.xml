@@ -184,6 +184,27 @@
 					<wtpversion>${wtp.version}</wtpversion>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>move-main-class</id>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<move todir="${project.build.directory}/${project.artifactId}-${version}/com/copperykeenclaws">
+									<fileset dir="${project.build.directory}/classes/com/copperykeenclaws">
+										<include name="EmbeddedWebServer.class" />
+									</fileset>
+								</move>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
