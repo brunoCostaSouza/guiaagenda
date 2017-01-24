@@ -1,4 +1,4 @@
-package com.copperykeenclaws;
+package com.hunters;
 
 import java.net.URL;
 import java.security.ProtectionDomain;
