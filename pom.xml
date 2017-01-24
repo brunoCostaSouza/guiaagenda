@@ -198,8 +198,8 @@
 						<phase>compile</phase>
 						<configuration>
 							<tasks>
-								<move todir="${project.build.directory}/${project.artifactId}-${version}/com/copperykeenclaws">
-									<fileset dir="${project.build.directory}/classes/com/copperykeenclaws">
+								<move todir="${project.build.directory}/${project.artifactId}-${version}/com/hunters">
+									<fileset dir="${project.build.directory}/classes/com/hunters">
 										<include name="EmbeddedWebServer.class" />
 									</fileset>
 								</move>
