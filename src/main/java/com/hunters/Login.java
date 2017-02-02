@@ -74,7 +74,8 @@ public class Login extends WebPage{
 				String senha = textSenha.getModelObject();
 				
 				;
-				info("Conexão:"+GenericDAO.getInstance().conn);
+				info("Conexão:"+GenericDAO.getInstance().conn+" "+GenericDAO.getInstance().url);
+				info(""+GenericDAO.getInstance().user+ " "+ GenericDAO.getInstance().sen);
 				target.add(feedbackPanel);
 				
 				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());

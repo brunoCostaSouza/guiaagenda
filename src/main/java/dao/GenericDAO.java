@@ -26,13 +26,16 @@ public class GenericDAO implements Serializable{
 	
 	private static GenericDAO dao = null;
 	
+	public String url;
+	public String user;
+	public String sen;
 	private GenericDAO() {
 		try {
             Class.forName("com.mysql.jdbc.Driver");
 //            conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
-            String url = System.getenv("DATABASE_URL");
-            String user = System.getenv("DATABASE_USER");
-            String sen = System.getenv("DATABASE_PASSWORD");
+            url = System.getenv("DATABASE_URL");
+            user = System.getenv("DATABASE_USER");
+            sen = System.getenv("DATABASE_PASSWORD");
             System.out.println("URL:"+url);
             
             conn = DriverManager.getConnection(url, user, sen);
