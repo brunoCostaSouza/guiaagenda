@@ -4,6 +4,7 @@ import intefaces.ICrudController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -39,9 +40,10 @@ public class NoticiasRest extends HttpServlet {
 		PrintWriter print = response.getWriter();
 		Gson gson = new Gson();
 		
-		List<NoticiaBean> jogadores =  controller.listarTudo(new NoticiaBean());
+		List<NoticiaBean> noticias =  controller.listarTudo(new NoticiaBean());
 		
-		print.print(gson.toJson(jogadores));
+		Collections.reverse(noticias);
+		print.print(gson.toJson(noticias));
 		print.flush();
 		print.close();
 	}

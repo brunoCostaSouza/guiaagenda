@@ -16,20 +16,26 @@ import util.Result;
 
 public class GenericDAO implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private final static String SERVIDOR = "localhost";
-    private final static String BANCO_DADOS = "huntersdb";
+	private final static String SERVIDOR ="localhost";
+    private final static String BANCO_DADOS ="huntersdb";
     private final static String PORTA = "3306";
     private final static String USUARIO = "root";
     private final static String SENHA = "admin";
     
-	private Connection conn = null;
+	public Connection conn = null;
 	
 	private static GenericDAO dao = null;
 	
 	private GenericDAO() {
 		try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
+//            conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
+            String url = System.getenv("DATABASE_URL");
+            String user = System.getenv("DATABASE_USER");
+            String sen = System.getenv("DATABASE_PASSWORD");
+            System.out.println("URL:"+url);
+            
+            conn = DriverManager.getConnection(url, user, sen);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {

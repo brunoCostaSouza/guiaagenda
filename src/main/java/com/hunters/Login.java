@@ -17,6 +17,7 @@ import org.apache.wicket.model.Model;
 
 import util.CustomFeedbackPanel;
 import controller.CrudController;
+import dao.GenericDAO;
 
 public class Login extends WebPage{
 	private static final long serialVersionUID = 1L;
@@ -71,6 +72,10 @@ public class Login extends WebPage{
 				
 				String login = textLogin.getModelObject();
 				String senha = textSenha.getModelObject();
+				
+				;
+				info("Conexão:"+GenericDAO.getInstance().conn);
+				target.add(feedbackPanel);
 				
 				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
 				boolean logou = false;
