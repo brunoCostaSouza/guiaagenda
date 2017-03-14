@@ -14,299 +14,310 @@ import model.AbstractBean;
 import util.Reflexao;
 import util.Result;
 
-public class GenericDAO implements Serializable{
+public class GenericDAO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private final static String SERVIDOR ="localhost";
-    private final static String BANCO_DADOS ="huntersdb";
-    private final static String PORTA = "3306";
-    private final static String USUARIO = "root";
-    private final static String SENHA = "admin";
-    
+	private final static String SERVIDOR = "localhost";
+	private final static String BANCO_DADOS = "huntersdb";
+	private final static String PORTA = "3306";
+	private final static String USUARIO = "root";
+	private final static String SENHA = "admin";
+
 	public Connection conn = null;
-	
+
 	private static GenericDAO dao = null;
-	
+
 	public String url;
 	public String user;
 	public String sen;
+
 	private GenericDAO() {
 		try {
-//            Class.forName("com.mysql.jdbc.Driver");
-//            conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
-			
+			// Class.forName("com.mysql.jdbc.Driver");
+			// conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
+
 			Class.forName("org.postgresql.Driver");
-			
-            url= System.getenv("JDBC_DATABASE_URL");
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-        	ex.printStackTrace();
-        }
+
+			url = System.getenv("JDBC_DATABASE_URL");
+			conn = DriverManager.getConnection(url);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
 	}
-	
-	public static GenericDAO getInstance(){
-		if(dao == null){
+
+	public static GenericDAO getInstance() {
+		if (dao == null) {
 			dao = new GenericDAO();
 		}
 		return dao;
 	}
-	
-	
-	
-	
-	public Result persist(AbstractBean<?> tabela){
+
+	public Result persist(AbstractBean<?> tabela) {
 		Result r = new Result();
 		r.setResult(false);
-		
-		ArrayList<String> nomesValores = Reflexao.getValoresColunaTabela(tabela, false);
-		
-		String  comandoSql = "INSERT INTO " + Reflexao.getNomeTabela(tabela) ;
-				comandoSql += "(" + nomesValores.get(0) + ") ";
-				comandoSql += "values(" + nomesValores.get(1) + ")";
-				
-		if(executaSql(comandoSql, tabela, false, true)){
-			
+
+		ArrayList<String> nomesValores = Reflexao.getValoresColunaTabela(
+				tabela, false);
+
+		String comandoSql = "INSERT INTO " + Reflexao.getNomeTabela(tabela);
+		comandoSql += "(" + nomesValores.get(0) + ") ";
+		comandoSql += "values(" + nomesValores.get(1) + ")";
+
+		if (executaSql(comandoSql, tabela, false, true)) {
+
 			r.setResult(true);
 			r.setAcao("execute");
 			r.setMsg("Adicionado com Sucesso");
-			
-		}else{
-			r.setMsg("Falha ao Adicionar "+tabela.getNomeTabela());
+
+		} else {
+			r.setMsg("Falha ao Adicionar " + tabela.getNomeTabela());
 		}
-		
+
 		return r;
 	}
-	
-	public Result save(AbstractBean<?> object){
-		
+
+	public Result save(AbstractBean<?> object) {
+
 		Result r = new Result();
 		r.setResult(false);
-		
-		String  comandoSql ="UPDATE " + object.getNomeTabela() + 
-							" SET "+object.getNomeAtributosParaSqlUpdate() + 
-							" WHERE "+object.getPKName()+"="+object.getPK() ;
-				 
-		if(executaSql(comandoSql, object, false, true)){
-			
+
+		String comandoSql = "UPDATE " + object.getNomeTabela() + " SET "
+				+ object.getNomeAtributosParaSqlUpdate() + " WHERE "
+				+ object.getPKName() + "=" + object.getPK();
+
+		if (executaSql(comandoSql, object, false, true)) {
+
 			r.setResult(true);
 			r.setAcao("execute");
 			r.setMsg("Alterado com Sucesso");
-			
-		}else{
-			r.setMsg("Falha ao Alterar "+object.getNomeTabela());
+
+		} else {
+			r.setMsg("Falha ao Alterar " + object.getNomeTabela());
 		}
-		
+
 		return r;
 	}
-	
-	public Result remove(AbstractBean<?> object){
-		
+
+	public Result remove(AbstractBean<?> object) {
+
 		Result r = new Result();
 		r.setResult(false);
-		
-		String  comandoSql = "DELETE FROM " + object.getNomeTabela()+ " WHERE "+object.getPKName()+"="+object.getPK() ;
-				 
-		if(executaSql(comandoSql, object, false, false)){
-			
+
+		String comandoSql = "DELETE FROM " + object.getNomeTabela() + " WHERE "
+				+ object.getPKName() + "=" + object.getPK();
+
+		if (executaSql(comandoSql, object, false, false)) {
+
 			r.setResult(true);
 			r.setAcao("execute");
 			r.setMsg("Excluido com Sucesso");
-			
-		}else{
-			r.setMsg("Falha ao Excluir "+object.getNomeTabela());
+
+		} else {
+			r.setMsg("Falha ao Excluir " + object.getNomeTabela());
 		}
-		
+
 		return r;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public <T extends AbstractBean<?>> List<T> listarTudo(T tabela){
-		
+	public <T extends AbstractBean<?>> List<T> listarTudo(T tabela) {
+
 		List<T> listObjects = new ArrayList<T>();
-		String sql= "SELECT " + tabela.getNomeColunasTabela(true) +" FROM " + tabela.getNomeTabela();
-		 
-		 try {
-			 
+		String sql = "SELECT " + tabela.getNomeColunasTabela(true) + " FROM "
+				+ tabela.getNomeTabela();
+
+		try {
+
 			ResultSet rs = executeSql(sql);
-			
-			if(rs != null){
-				while(rs.next()){
+
+			if (rs != null) {
+				while (rs.next()) {
 					AbstractBean<?> objeto = tabela.getClass().newInstance();
-					
-					int qtdColunas =  rs.getMetaData().getColumnCount();
-					
-					for(int i = 1; i <= qtdColunas; i++){
+
+					int qtdColunas = rs.getMetaData().getColumnCount();
+
+					for (int i = 1; i <= qtdColunas; i++) {
 						Object valorColuna = rs.getObject(i);
 						String nomeColuna = rs.getMetaData().getColumnName(i);
-						objeto.setValorAtributo(nomeColuna.substring(0, 1).toLowerCase()+nomeColuna.substring(1), valorColuna);
+						objeto.setValorAtributo(nomeColuna.substring(0, 1)
+								.toLowerCase() + nomeColuna.substring(1),
+								valorColuna);
 					}
-					
-					listObjects.add((T)objeto);
+
+					listObjects.add((T) objeto);
 				}
 			}
-			
+
 			return listObjects;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
+
 		return listObjects;
 	}
-	
-	public <T extends AbstractBean<?>> List<T> search(T tabela, String nomeColuna, String stringPesquisa){
-		
+
+	public <T extends AbstractBean<?>> List<T> search(T tabela,
+			String nomeColuna, String stringPesquisa) {
+
 		List<T> listObjects = new ArrayList<T>();
-		
-		String sql = "SELECT " + tabela.getNomeColunasTabela(true) 
-				   +" FROM " + tabela.getNomeTabela() 
-				   +" WHERE " + nomeColuna + " LIKE " + "'%" + stringPesquisa + "%'";
-		 
-		 try {
-			 
+
+		String sql = "SELECT " + tabela.getNomeColunasTabela(true) + " FROM "
+				+ tabela.getNomeTabela() + " WHERE " + nomeColuna + " LIKE "
+				+ "'%" + stringPesquisa + "%'";
+
+		try {
+
 			ResultSet rs = executeSql(sql);
-			
-			if(rs != null){
-				while(rs.next()){
-					
+
+			if (rs != null) {
+				while (rs.next()) {
+
 					@SuppressWarnings("unchecked")
 					T objeto = (T) tabela.getClass().newInstance();
-					
-					int qtdColunas =  rs.getMetaData().getColumnCount();
-					String[] attributos = objeto.getNomeColunasTabela(true).split(",");
-					
-					for(int i = 0; i < qtdColunas; i++){
-						Object valorColuna = rs.getObject(i+1);
+
+					int qtdColunas = rs.getMetaData().getColumnCount();
+					String[] attributos = objeto.getNomeColunasTabela(true)
+							.split(",");
+
+					for (int i = 0; i < qtdColunas; i++) {
+						Object valorColuna = rs.getObject(i + 1);
 						String attr = attributos[i];
 						Reflexao.setValorAtributo(objeto, attr, valorColuna);
 					}
-					
+
 					listObjects.add(objeto);
 				}
 			}
-			
+
 			return listObjects;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
+
 		return listObjects;
 	}
-	
-	public <T extends AbstractBean<?>> T search(T tabela, String nomeColuna, Object valorPesquisa){
-		
+
+	public <T extends AbstractBean<?>> T search(T tabela, String nomeColuna,
+			Object valorPesquisa) {
+
 		String valores = "";
-		
-		String sql = "SELECT " + tabela.getNomeColunasTabela(true) 
-				   +" FROM " + tabela.getNomeTabela() 
-				   +" WHERE " + nomeColuna + " = '" + valorPesquisa+"'";
-		 
-		 try {
-			 
+
+		String sql = "SELECT " + tabela.getNomeColunasTabela(true) + " FROM "
+				+ tabela.getNomeTabela() + " WHERE " + nomeColuna + " = '"
+				+ valorPesquisa + "'";
+
+		try {
+
 			ResultSet rs = executeSql(sql);
-			
-			if(rs.next()){
-					
+
+			if (rs.next()) {
+
 				@SuppressWarnings("unchecked")
 				T objeto = (T) tabela.getClass().newInstance();
-				
-				int qtdColunas =  rs.getMetaData().getColumnCount();
-				
-				for(int i = 1; i <= qtdColunas; i++){
+
+				int qtdColunas = rs.getMetaData().getColumnCount();
+
+				for (int i = 1; i <= qtdColunas; i++) {
 					Object valorColuna = rs.getObject(i);
-					valores += ","+valorColuna;
+					valores += "," + valorColuna;
 				}
-				
-				if(valores != null && valores.length()>0){
+
+				if (valores != null && valores.length() > 0) {
 					valores = valores.substring(1, valores.length());
 				}
-				
+
 				return objeto;
 			}
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
+
 		return null;
 	}
-	
-	public <T extends AbstractBean<?>> T searchSemAspas(T tabela, String nomeColuna, Object valorPesquisa){
-		
-		String sql = "SELECT " + tabela.getNomeColunasTabela(true) 
-				   +" FROM " + tabela.getNomeTabela() 
-				   +" WHERE " + nomeColuna + " = " + valorPesquisa;
-		 
-		 try {
-			 
+
+	public <T extends AbstractBean<?>> T searchSemAspas(T tabela,
+			String nomeColuna, Object valorPesquisa) {
+
+		String sql = "SELECT " + tabela.getNomeColunasTabela(true) + " FROM "
+				+ tabela.getNomeTabela() + " WHERE " + nomeColuna + " = "
+				+ valorPesquisa;
+
+		try {
+
 			ResultSet rs = executeSql(sql);
-			
-			if(rs.next()){
-					
+
+			if (rs.next()) {
+
 				@SuppressWarnings("unchecked")
 				T objeto = (T) tabela.getClass().newInstance();
-				
-				int qtdColunas =  rs.getMetaData().getColumnCount();
-				
-				for(int i = 1; i <= qtdColunas; i++){
-					String columnName = rs.getMetaData().getColumnName(i).toLowerCase();
+
+				int qtdColunas = rs.getMetaData().getColumnCount();
+
+				for (int i = 1; i <= qtdColunas; i++) {
+					String columnName = rs.getMetaData().getColumnName(i)
+							.toLowerCase();
 					Object valorColuna = rs.getObject(i);
 					objeto.setValorAtributo(columnName, valorColuna);
 				}
-				
+
 				return objeto;
 			}
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
-	
-	public <T extends AbstractBean<?>> T getObjeto(T tabela){
-		
-		String comandoSql = "SELECT "+tabela.getNomeColunasTabela(true)+" FROM "+tabela.getNomeTabela()+" WHERE "+tabela.getPKName()+" = " + "'" +tabela.getPK().toString()+"'";
-		
+
+	public <T extends AbstractBean<?>> T getObjeto(T tabela) {
+
+		String comandoSql = "SELECT " + tabela.getNomeColunasTabela(true)
+				+ " FROM " + tabela.getNomeTabela() + " WHERE "
+				+ tabela.getPKName() + " = " + "'" + tabela.getPK().toString()
+				+ "'";
+
 		try {
-			
+
 			ResultSet rs = executeSql(comandoSql);
-			
-			if(rs != null){
-				
+
+			if (rs != null) {
+
 				int qtdeColunas = rs.getMetaData().getColumnCount();
-				
-				if(rs.next()){
-					for(int i = 1; i <= qtdeColunas; i++){
-						Object val = rs.getObject(i)!=null?rs.getObject(i):"";
-						tabela.setValorAtributo(rs.getMetaData().getColumnName(i), val);
+
+				if (rs.next()) {
+					for (int i = 1; i <= qtdeColunas; i++) {
+						Object val = rs.getObject(i) != null ? rs.getObject(i)
+								: "";
+						tabela.setValorAtributo(
+								rs.getMetaData().getColumnName(i), val);
 					}
 				}
-				
+
 				return tabela;
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 		return null;
 	}
-	
-	private boolean executaSql(String sql, AbstractBean<?> tabela, boolean incluirPk, boolean completarStetement){
+
+	private boolean executaSql(String sql, AbstractBean<?> tabela,
+			boolean incluirPk, boolean completarStetement) {
 		PreparedStatement statement;
 		try {
 			statement = conn.prepareStatement(sql);
-			if(completarStetement){
+			if (completarStetement) {
 				Reflexao.completeStatement(statement, tabela, incluirPk);
 			}
-			if(statement.executeUpdate()==1){
+			if (statement.executeUpdate() == 1) {
 				return true;
 			}
 		} catch (Exception e) {
@@ -314,12 +325,12 @@ public class GenericDAO implements Serializable{
 		}
 		return false;
 	}
-	
-	private ResultSet executeSql(String sql){
-		
+
+	private ResultSet executeSql(String sql) {
+
 		ResultSet resultSet;
 		Statement st;
-		
+
 		try {
 			st = conn.createStatement();
 			resultSet = st.executeQuery(sql);
@@ -329,6 +340,126 @@ public class GenericDAO implements Serializable{
 		}
 		return null;
 	}
+
+	public Boolean verificarSeExisteTabela() {
+
+		String sql = "SELECT * from login";
+
+		try {
+			executeSql(sql);
+			return true;
+		} catch (Exception e) {
+
+		}
+		return false;
+	}
 	
+	public void criarTabelaJogador() throws SQLException{
+		String sql = "CREATE TABLE jogador ("
+				+ "Id bigserial primary key,"
+				+ "nome varchar(255) DEFAULT NULL,"
+				+ "cpf varchar(255) DEFAULT NULL);";
+
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			ps.close();
+		}
+	}
 	
+	public void criarTabelaLogin() throws SQLException{
+		String sql = "CREATE TABLE login ("
+				+ "Id bigserial primary key,"
+				+ "login varchar(255) DEFAULT NULL,"
+				+ "senha varchar(255) DEFAULT NULL);";
+
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			ps.close();
+		}
+	}
+	
+	public void criarTabelaNoticia() throws SQLException{
+		String sql = "CREATE TABLE noticia ("
+				+ "Id bigserial primary key,"
+				+ "titulo varchar(255) DEFAULT NULL,"
+				+ "conteudo text,"
+				+ "dataNoticia varchar(10) DEFAULT NULL);";
+
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			ps.close();
+		}
+	}
+	
+	public void criarTabelaRankingArco() throws SQLException{
+		String sql = "CREATE TABLE rankingarcoflecha ("
+				+ "Id bigserial primary key,"
+				+ "nome varchar(255) DEFAULT NULL,"
+				+ "pontos double precision DEFAULT NULL,"
+				+ "posicao integer DEFAULT NULL,"
+				+ "jogador integer DEFAULT NULL);";
+
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			ps.close();
+		}
+	}
+	
+	public void criarTabelaRankingPistola()throws SQLException{
+		String sql = "CREATE TABLE rankingpistola ("
+				+ "Id bigserial primary key,"
+				+ "nome varchar(255) DEFAULT NULL,"
+				+ "pontos double precision DEFAULT NULL,"
+				+ "posicao integer DEFAULT NULL,"
+				+ "jogador integer DEFAULT NULL);";
+
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			ps.close();
+		}
+	}
+	
+	public void criarTabelaRankingFuzil()throws SQLException{
+		String sql = "CREATE TABLE rankingfuzil ("
+				+ "Id bigserial primary key,"
+				+ "nome varchar(255) DEFAULT NULL,"
+				+ "pontos double precision DEFAULT NULL,"
+				+ "posicao integer DEFAULT NULL,"
+				+ "jogador integer DEFAULT NULL);";
+
+		PreparedStatement ps = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			ps.close();
+		}
+	}
 }

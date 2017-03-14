@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 
+import util.CreateDataBase;
 import util.CustomFeedbackPanel;
 import controller.CrudController;
 import dao.GenericDAO;
@@ -29,6 +30,8 @@ public class Login extends WebPage{
 	
 	public Login() {
 		super();
+		CreateDataBase.createDataBaseSeNecessario();
+		
 		add(criarForm());
 		form.add(criarTextFieldLogin());
 		form.add(criarTextFieldSenha());
@@ -73,7 +76,6 @@ public class Login extends WebPage{
 				String login = textLogin.getModelObject();
 				String senha = textSenha.getModelObject();
 				
-				;
 				info("Conexão:"+GenericDAO.getInstance().conn+" "+GenericDAO.getInstance().url);
 				info(""+GenericDAO.getInstance().user+ " "+ GenericDAO.getInstance().sen);
 				target.add(feedbackPanel);
