@@ -17,6 +17,9 @@ public class JogadorBean extends AbstractBean<Integer> implements Serializable{
 	@Atributo(nome="nome")
 	private String nome;
 	
+	@Atributo(nome="cpf")
+	private String cpf;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -33,6 +36,17 @@ public class JogadorBean extends AbstractBean<Integer> implements Serializable{
 		this.nome = nome;
 	}
 
+	public String getCpf() {
+		if(cpf!=null){
+			return cpf;
+		}
+		return "";
+	}
+	
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
 	@Override
 	public String getPKName() {
 		return "id";
@@ -43,6 +57,7 @@ public class JogadorBean extends AbstractBean<Integer> implements Serializable{
 	public void resetCampos() {
 		id = null;
 		nome = null;
+		cpf = null;
 	}
 
 	@Override

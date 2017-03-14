@@ -8,24 +8,38 @@
 <wicket:extend>
 	<div id="main" class="container-fluid">
 	     <div id="top" class="row">
-			<div class="col-md-3">
+			<div class="col-md-2">
 		        <h2>Jogadores</h2>
 	    	</div>
  
-		    <div class="col-md-6">
+		    <div class="col-md-7">
 	        	<form wicket:id="formFiltro">
-		            <div class="input-group h2">
-			            <input wicket:id="filtrarJogador" class="form-control" type="text" placeholder="Pesquisar Jogador">
-			            <span class="input-group-btn">
-			                <button id="botaoFiltrar" wicket:id="botaoFiltrar" class="btn btn-primary" type="submit">
-			                    <span class="glyphicon glyphicon-search"></span>
-			                </button>
-			            </span>
-		            </div>
+	        		<div class="col-md-6">
+	        			<div class="input-group h2">
+				            <input wicket:id="filtrarJogador" class="form-control" type="text" placeholder="Pesquisar NOME">
+				            <span class="input-group-btn">
+				                <button id="botaoFiltrar" wicket:id="botaoFiltrar" class="btn btn-primary" type="submit">
+				                    <span class="glyphicon glyphicon-search"></span>
+				                </button>
+				            </span>
+			            </div>
+	        		</div>
+	        		
+	        		<div class="col-md-6">
+	        			<div class="input-group h2">
+				            <input wicket:id="filtrarJogadorCpf" class="form-control" type="text" placeholder="Pesquisar CPF">
+				            <span class="input-group-btn">
+				                <button id="botaoFiltrarCpf" wicket:id="btnFiltrarCpf" class="btn btn-primary" type="submit">
+				                    <span class="glyphicon glyphicon-search"></span>
+				                </button>
+				            </span>
+			            </div>
+	        		</div>
+		            
 	            </form>
 		    </div>
  
-		    <div class="col-md-3">
+		    <div class="col-md-2">
 		        <a wicket:id="criarJogador" class="btn btn-primary pull-right h2"><i class="glyphicon glyphicon-plus"></i> Novo Jogador</a>
 		    </div>
 		    
@@ -39,13 +53,14 @@
 		</div>
 		<div wicket:id="divListaJogador">
 		     <div id="list" class="row">
-			    <div class="table-responsive col-md-6 col-md-offset-3">
+			    <div class="table-responsive col-md-9 col-md-offset-2">
 			        <div class="panel panel-default">
 			        	<div class="panel-body">
 					        <table class="table table-hover " >
 					            <thead>
 					                <tr>
-					                    <th style="width: 90%; font-size: 18px;">Nome</th>
+					                    <th style="width: 60%; font-size: 18px;">Nome</th>
+					                    <th style="width: 30%; font-size: 18px;">CPF</th>
 					                    <th style="width: 10%" class="actions">Ações</th>
 					                 </tr>
 					            </thead>
@@ -53,6 +68,7 @@
 					 
 					                <tr>
 					                    <td style="font-size: 20px;" wicket:id="nomeJogador">Bruno da Silva Costa Souza</td>
+					                    <td style="font-size: 20px;" wicket:id="cpfJogador">12312312312</td>
 					                    <td class="actions">
 					                        <a wicket:id="editarJogador" class="btn btn-warning btn-xs" ><i class="glyphicon glyphicon-pencil"></i></a>
 					                        <a wicket:id="excluirJogador" class="btn btn-danger btn-xs" ><i class="glyphicon glyphicon-trash"></i></a><!-- data-toggle="modal" data-target="#delete-modal" -->

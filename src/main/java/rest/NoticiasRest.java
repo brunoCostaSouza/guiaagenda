@@ -37,15 +37,20 @@ public class NoticiasRest extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
-		PrintWriter print = response.getWriter();
-		Gson gson = new Gson();
 		
-		List<NoticiaBean> noticias =  controller.listarTudo(new NoticiaBean());
+		String tokken =  request.getHeader("tokken");
 		
-		Collections.reverse(noticias);
-		print.print(gson.toJson(noticias));
-		print.flush();
-		print.close();
+		if(tokken!=null && tokken.equals("apphunters")){
+			PrintWriter print = response.getWriter();
+			Gson gson = new Gson();
+
+			List<NoticiaBean> noticias =  controller.listarTudo(new NoticiaBean());
+			
+			Collections.reverse(noticias);
+			print.print(gson.toJson(noticias));
+			print.flush();
+			print.close();
+		}
 	}
 
 }

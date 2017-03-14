@@ -57,6 +57,9 @@ public class ListaJogador extends BasePage{
 		
 		formFiltro.add(criarTextFieldPesquisa());
 		formFiltro.add(criarBotaoPesquisar());
+		
+		formFiltro.add(criarTextFieldPesquisaCpf());
+		formFiltro.add(criarBotaoPesquisarCpf());
 	}
 	
 	
@@ -86,6 +89,7 @@ public class ListaJogador extends BasePage{
 			protected void populateItem(ListItem<JogadorBean> item) {
 				JogadorBean JogadorBean = item.getModelObject();
 				item.add(new Label("nomeJogador", JogadorBean.getNome()).setOutputMarkupId(true));
+				item.add(new Label("cpfJogador", JogadorBean.getCpf()).setOutputMarkupId(true));
 				item.add(criarLinkEditar(JogadorBean));
 				item.add(criarLinkExcluir(JogadorBean));
 			}
@@ -145,6 +149,19 @@ public class ListaJogador extends BasePage{
 		return linkFiltro;
 	}
 	
+	private AjaxSubmitLink criarBotaoPesquisarCpf(){
+		AjaxSubmitLink linkFiltro = new AjaxSubmitLink("btnFiltrarCpf", formFiltro) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target) {
+				super.onSubmit(target);
+				filtrarCpf(target);
+			}
+		};
+		return linkFiltro;
+	}
+	
 	@SuppressWarnings("unchecked")
 	private TextField<String> criarTextFieldPesquisa(){
 		textFieldPesquisa = (TextField<String>) new TextField<String>("filtrarJogador", new Model<String>()).add(new AjaxEventBehavior("keydown"){
@@ -160,6 +177,22 @@ public class ListaJogador extends BasePage{
 		return (TextField<String>) textFieldPesquisa;
 	}
 	
+	@SuppressWarnings("unchecked")
+	private TextField<String> criarTextFieldPesquisaCpf(){
+		textFieldPesquisaCpf = (TextField<String>) new TextField<String>("filtrarJogadorCpf", new Model<String>()).add(new AjaxEventBehavior("keydown"){
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void onEvent(AjaxRequestTarget target) {
+				target.appendJavaScript("$('#botaoFiltrarCpf').click();");
+			}
+			
+		});
+		
+		textFieldPesquisaCpf.setOutputMarkupId(true);
+		return (TextField<String>) textFieldPesquisaCpf;
+	}
+	
 	@Override
 	public void filtrar(AjaxRequestTarget target){
 		
@@ -167,6 +200,20 @@ public class ListaJogador extends BasePage{
 		
 		if(nomePesquisa != null && !nomePesquisa.replaceAll(" ", "").equals("")){
 			listaJogador = controller.search(new JogadorBean(), "nome", nomePesquisa);
+		}else{
+			listaJogador = controller.listarTudo(new JogadorBean());
+		}
+		
+		listViewJogador.setModelObject(listaJogador);
+		target.add(divListaJogador);
+	}
+	
+	public void filtrarCpf(AjaxRequestTarget target){
+		
+		String cpfPesquisa = (String) textFieldPesquisaCpf.getModelObject();
+		
+		if(cpfPesquisa != null && !cpfPesquisa.replaceAll(" ", "").equals("")){
+			listaJogador = controller.search(new JogadorBean(), "cpf", cpfPesquisa);
 		}else{
 			listaJogador = controller.listarTudo(new JogadorBean());
 		}

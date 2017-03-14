@@ -17,6 +17,7 @@ public class JogadorEditForm extends EditForm{
 	private static final long serialVersionUID = 1L;
 	
 	private TextField<String> textNome;
+	private TextField<String> textCpf;
 	private TextField<Integer> textId;
 	
 	public JogadorEditForm(AbstractBean<?> bean, int userCase) {
@@ -28,6 +29,7 @@ public class JogadorEditForm extends EditForm{
 	public void adicionarCampos() {
 		getForm().add(criarCampoId());
 		getForm().add(criarCampoNome());
+		getForm().add(criarCampoCpf());
 	}
 
 	@Override
@@ -53,12 +55,19 @@ public class JogadorEditForm extends EditForm{
 		return textNome;
 	}
 	
+	private TextField<String> criarCampoCpf(){
+		textCpf = new TextField<>("cpf");
+		textCpf.setRequired(true);
+		textCpf.setOutputMarkupId(true);
+		textCpf.setEnabled(isComponentEnable());
+		return textCpf;
+	}
+	
 	@Override
 	public boolean afterPersistOrSave(AjaxRequestTarget target) {return true;}
 
 	@Override
 	public void beforePersistOrSave(AjaxRequestTarget target) {
-		
 		
 	}
 	
@@ -95,7 +104,7 @@ public class JogadorEditForm extends EditForm{
 
 	@Override
 	public void beforeDeleteItem() {
-		// TODO Auto-generated method stub
 		
 	}
+	
 }

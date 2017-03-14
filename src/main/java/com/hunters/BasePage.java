@@ -20,6 +20,7 @@ public abstract class BasePage extends WebPage{
 	
 	public AjaxSubmitLink linkFiltro;
 	public TextField<?> textFieldPesquisa;
+	public TextField<?> textFieldPesquisaCpf;
 	
 	public abstract AjaxLink<String> criarLinkExcluir(final AbstractBean<?> table);
 	public abstract Link<String> criarLinkEditar(final AbstractBean<?> table);

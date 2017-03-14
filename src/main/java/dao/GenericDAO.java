@@ -33,12 +33,11 @@ public class GenericDAO implements Serializable{
 		try {
             Class.forName("com.mysql.jdbc.Driver");
 //            conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
-            url = System.getenv("DATABASE_URL");
-            user = System.getenv("DATABASE_USER");
-            sen = System.getenv("DATABASE_PASSWORD");
-            System.out.println("URL:"+url);
-            
-            conn = DriverManager.getConnection(url, user, sen);
+            conn = DriverManager.getConnection("postgres://ivcqccrbqipomr:5a00f0b51d59f01ce184892f68bef031dc72b14ce0ade806afceb5975d241897@ec2-54-225-242-74.compute-1.amazonaws.com:5432/d1arjndac8q4r1");
+//            url = System.getenv("DATABASE_URL");
+//            user = System.getenv("DATABASE_USER");
+//            sen = System.getenv("DATABASE_PASSWORD");
+//            conn = DriverManager.getConnection(url, user, sen);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
@@ -158,8 +157,6 @@ public class GenericDAO implements Serializable{
 	
 	public <T extends AbstractBean<?>> List<T> search(T tabela, String nomeColuna, String stringPesquisa){
 		
-		String valores = "";
-		
 		List<T> listObjects = new ArrayList<T>();
 		
 		String sql = "SELECT " + tabela.getNomeColunasTabela(true) 
@@ -177,19 +174,15 @@ public class GenericDAO implements Serializable{
 					T objeto = (T) tabela.getClass().newInstance();
 					
 					int qtdColunas =  rs.getMetaData().getColumnCount();
+					String[] attributos = objeto.getNomeColunasTabela(true).split(",");
 					
-					for(int i = 1; i <= qtdColunas; i++){
-						Object valorColuna = rs.getObject(i);
-						valores += ","+valorColuna;
+					for(int i = 0; i < qtdColunas; i++){
+						Object valorColuna = rs.getObject(i+1);
+						String attr = attributos[i];
+						Reflexao.setValorAtributo(objeto, attr, valorColuna);
 					}
 					
-					if(valores != null && valores.length()>0){
-						valores = valores.substring(1, valores.length());
-					}
-					
-//					objeto.setValoresColunasTabela(valores);
 					listObjects.add(objeto);
-					valores = "";
 				}
 			}
 			

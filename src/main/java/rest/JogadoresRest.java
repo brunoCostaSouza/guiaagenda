@@ -36,14 +36,19 @@ public class JogadoresRest extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json");
-		PrintWriter print = response.getWriter();
-		Gson gson = new Gson();
 		
-		List<JogadorBean> jogadores =  controller.listarTudo(new JogadorBean());
+		String tokken =  request.getHeader("tokken");
 		
-		print.print(gson.toJson(jogadores));
-		print.flush();
-		print.close();
+		if(tokken != null && tokken.equals("apphunters")){
+			PrintWriter print = response.getWriter();
+			Gson gson = new Gson();
+			
+			List<JogadorBean> jogadores =  controller.listarTudo(new JogadorBean());
+			
+			print.print(gson.toJson(jogadores));
+			print.flush();
+			print.close();
+		}
 	}
 
 }

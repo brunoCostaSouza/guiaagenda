@@ -7,6 +7,7 @@ import org.apache.catalina.startup.Tomcat;
 
 public class EmbeddedWebServer {
 
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = -6777759990550225380L;
 
 	public static void main(String[] args) throws Exception {
