@@ -7,8 +7,8 @@ public class CreateDataBase {
 	public static void createDataBaseSeNecessario(Result r){
 		if(GenericDAO.getInstance().conn != null){
 			
-			if(!GenericDAO.getInstance().verificarSeExisteTabela()){
-				
+			if(!GenericDAO.getInstance().verificarSeExisteTabela(r)){
+				r.setMsg("Não existe a tablea login");
 				try {
 					GenericDAO.getInstance().criarTabelaLogin(r);
 					GenericDAO.getInstance().criarTabelaJogador();

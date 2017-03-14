@@ -341,7 +341,7 @@ public class GenericDAO implements Serializable {
 		return null;
 	}
 
-	public Boolean verificarSeExisteTabela() {
+	public Boolean verificarSeExisteTabela(Result r) {
 
 		String sql = "SELECT * from login";
 
@@ -349,7 +349,8 @@ public class GenericDAO implements Serializable {
 			executeSql(sql);
 			return true;
 		} catch (Exception e) {
-
+			e.printStackTrace();
+			r.setMsg(e.getMessage());
 		}
 		return false;
 	}
@@ -381,6 +382,7 @@ public class GenericDAO implements Serializable {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.executeUpdate();
+			r.setMsg("Tabela Login criada com sucesso");
 		} catch (Exception e) {
 			e.printStackTrace();
 			r.setMsg(e.getMessage());
