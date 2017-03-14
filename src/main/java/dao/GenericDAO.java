@@ -35,7 +35,7 @@ public class GenericDAO implements Serializable{
 		try {
             Class.forName("com.mysql.jdbc.Driver");
 //            conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
-            url= System .getenv ( " JDBC_DATABASE_URL " );
+            url= System.getenv("JDBC_DATABASE_URL");
             conn = DriverManager.getConnection(url);
             user = System.getenv("DATABASE_USER");
             sen = System.getenv("DATABASE_PASSWORD");
