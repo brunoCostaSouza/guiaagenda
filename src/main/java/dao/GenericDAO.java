@@ -469,7 +469,7 @@ public class GenericDAO implements Serializable {
 			LoginBean usuario = new LoginBean();
 			usuario.setLogin("huntersadmin");
 			usuario.setSenha("testes12");
-			save(usuario);
+			persist(usuario);
 		}
 	}
 }
