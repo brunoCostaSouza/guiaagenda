@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jetty.plus.webapp.EnvConfiguration;
+
 import model.AbstractBean;
 import util.Reflexao;
 import util.Result;
@@ -33,10 +35,10 @@ public class GenericDAO implements Serializable{
 		try {
             Class.forName("com.mysql.jdbc.Driver");
 //            conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
-            conn = DriverManager.getConnection("postgres://ivcqccrbqipomr:5a00f0b51d59f01ce184892f68bef031dc72b14ce0ade806afceb5975d241897@ec2-54-225-242-74.compute-1.amazonaws.com:5432/d1arjndac8q4r1");
-//            url = System.getenv("DATABASE_URL");
-//            user = System.getenv("DATABASE_USER");
-//            sen = System.getenv("DATABASE_PASSWORD");
+            url= System .getenv ( " JDBC_DATABASE_URL " );
+            conn = DriverManager.getConnection(url);
+            user = System.getenv("DATABASE_USER");
+            sen = System.getenv("DATABASE_PASSWORD");
 //            conn = DriverManager.getConnection(url, user, sen);
         } catch (SQLException ex) {
             ex.printStackTrace();
