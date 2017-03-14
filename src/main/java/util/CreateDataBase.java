@@ -20,8 +20,6 @@ public class CreateDataBase {
 					e.printStackTrace();
 				}
 				
-			}else{
-				GenericDAO.getInstance().inserirUsuarioAdmin();
 			}
 			
 		}

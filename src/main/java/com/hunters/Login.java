@@ -17,6 +17,7 @@ import org.apache.wicket.model.Model;
 
 import util.CreateDataBase;
 import util.CustomFeedbackPanel;
+import util.Result;
 import controller.CrudController;
 import dao.GenericDAO;
 
@@ -81,8 +82,17 @@ public class Login extends WebPage{
 				
 				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
 				boolean logou = false;
+				
 				info("size:"+listLogin!=null?listLogin.size():null);
 				target.add(feedbackPanel);
+				
+				Result r = GenericDAO.getInstance().inserirUsuarioAdmin();
+				
+				if(r != null){
+					info("r:"+r.getMsg());
+					target.add(feedbackPanel);
+				}
+				
 				if(listLogin!=null && listLogin.size() > 0){
 					for(LoginBean lb : listLogin){
 						if((login != null && senha != null) && (!login.equals("") && !senha.equals("")) && (login.equals(lb.getLogin()) && senha.equals(lb.getSenha()))){
