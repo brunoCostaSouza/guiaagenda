@@ -65,14 +65,14 @@ public class GenericDAO implements Serializable {
 		comandoSql += "(" + nomesValores.get(0) + ") ";
 		comandoSql += "values(" + nomesValores.get(1) + ")";
 
-		if (executaSql(comandoSql, tabela, false, true)) {
+		if (executaSql(comandoSql, tabela, false, true, r)) {
 
 			r.setResult(true);
 			r.setAcao("execute");
 			r.setMsg("Adicionado com Sucesso");
 
 		} else {
-			r.setMsg("Falha ao Adicionar " + tabela.getNomeTabela());
+			//r.setMsg("Falha ao Adicionar " + tabela.getNomeTabela());
 		}
 
 		return r;
@@ -87,7 +87,7 @@ public class GenericDAO implements Serializable {
 				+ object.getNomeAtributosParaSqlUpdate() + " WHERE "
 				+ object.getPKName() + "=" + object.getPK();
 
-		if (executaSql(comandoSql, object, false, true)) {
+		if (executaSql(comandoSql, object, false, true, r)) {
 
 			r.setResult(true);
 			r.setAcao("execute");
@@ -108,7 +108,7 @@ public class GenericDAO implements Serializable {
 		String comandoSql = "DELETE FROM " + object.getNomeTabela() + " WHERE "
 				+ object.getPKName() + "=" + object.getPK();
 
-		if (executaSql(comandoSql, object, false, false)) {
+		if (executaSql(comandoSql, object, false, false, r)) {
 
 			r.setResult(true);
 			r.setAcao("execute");
@@ -311,7 +311,7 @@ public class GenericDAO implements Serializable {
 	}
 
 	private boolean executaSql(String sql, AbstractBean<?> tabela,
-			boolean incluirPk, boolean completarStetement) {
+			boolean incluirPk, boolean completarStetement, Result r) {
 		PreparedStatement statement;
 		try {
 			statement = conn.prepareStatement(sql);
@@ -323,6 +323,7 @@ public class GenericDAO implements Serializable {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			r.setMsg(e.getMessage());
 		}
 		return false;
 	}
