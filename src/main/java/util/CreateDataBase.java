@@ -4,13 +4,13 @@ import dao.GenericDAO;
 
 public class CreateDataBase {
 	
-	public static void createDataBaseSeNecessario(){
+	public static void createDataBaseSeNecessario(Result r){
 		if(GenericDAO.getInstance().conn != null){
 			
 			if(!GenericDAO.getInstance().verificarSeExisteTabela()){
 				
 				try {
-					GenericDAO.getInstance().criarTabelaLogin();
+					GenericDAO.getInstance().criarTabelaLogin(r);
 					GenericDAO.getInstance().criarTabelaJogador();
 					GenericDAO.getInstance().criarTabelaNoticia();
 					GenericDAO.getInstance().criarTabelaRankingArco();

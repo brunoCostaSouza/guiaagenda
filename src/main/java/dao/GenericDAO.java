@@ -58,8 +58,7 @@ public class GenericDAO implements Serializable {
 		Result r = new Result();
 		r.setResult(false);
 
-		ArrayList<String> nomesValores = Reflexao.getValoresColunaTabela(
-				tabela, false);
+		ArrayList<String> nomesValores = Reflexao.getValoresColunaTabela(tabela, false);
 
 		String comandoSql = "INSERT INTO " + Reflexao.getNomeTabela(tabela);
 		comandoSql += "(" + nomesValores.get(0) + ") ";
@@ -125,8 +124,7 @@ public class GenericDAO implements Serializable {
 	public <T extends AbstractBean<?>> List<T> listarTudo(T tabela) {
 
 		List<T> listObjects = new ArrayList<T>();
-		String sql = "SELECT " + tabela.getNomeColunasTabela(true) + " FROM "
-				+ tabela.getNomeTabela();
+		String sql = "SELECT " + tabela.getNomeColunasTabela(true) + " FROM "+ tabela.getNomeTabela();
 
 		try {
 
@@ -373,7 +371,7 @@ public class GenericDAO implements Serializable {
 		}
 	}
 	
-	public void criarTabelaLogin() throws SQLException{
+	public void criarTabelaLogin(Result r) throws SQLException{
 		String sql = "CREATE TABLE login ("
 				+ "Id bigserial primary key,"
 				+ "login varchar(255) DEFAULT NULL,"
@@ -385,6 +383,7 @@ public class GenericDAO implements Serializable {
 			ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
+			r.setMsg(e.getMessage());
 		}finally{
 			ps.close();
 		}

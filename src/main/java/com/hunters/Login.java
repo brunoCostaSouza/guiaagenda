@@ -27,11 +27,12 @@ public class Login extends WebPage{
 	private PasswordTextField textSenha;
 	private FeedbackPanel feedbackPanel;
 	private Form<String> form;
+	private Result resultteste = new Result();
 	private ICrudController controller = new CrudController();
 	
 	public Login() {
 		super();
-		CreateDataBase.createDataBaseSeNecessario();
+		CreateDataBase.createDataBaseSeNecessario(resultteste);
 		
 		add(criarForm());
 		form.add(criarTextFieldLogin());
@@ -83,13 +84,13 @@ public class Login extends WebPage{
 				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
 				boolean logou = false;
 				
-				info("size:"+listLogin!=null?listLogin.size():null);
-				target.add(feedbackPanel);
+//				info("size:"+listLogin!=null?listLogin.size():null);
+//				target.add(feedbackPanel);
 				
-				Result r = GenericDAO.getInstance().inserirUsuarioAdmin();
+//				Result r = GenericDAO.getInstance().inserirUsuarioAdmin();
 				
-				if(r != null){
-					info("r:"+r.getMsg());
+				if(resultteste != null){
+					info("r:"+resultteste.getMsg());
 					target.add(feedbackPanel);
 				}
 				
