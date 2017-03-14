@@ -31,13 +31,13 @@ public class GenericDAO implements Serializable{
 	public String sen;
 	private GenericDAO() {
 		try {
-            Class.forName("com.mysql.jdbc.Driver");
+//            Class.forName("com.mysql.jdbc.Driver");
 //            conn = DriverManager.getConnection("jdbc:mysql://" + SERVIDOR + ":" + PORTA + "/" + BANCO_DADOS, USUARIO, SENHA);
+			
+			Class.forName("org.postgresql.Driver");
+			
             url= System.getenv("JDBC_DATABASE_URL");
             conn = DriverManager.getConnection(url);
-            user = System.getenv("DATABASE_USER");
-            sen = System.getenv("DATABASE_PASSWORD");
-//            conn = DriverManager.getConnection(url, user, sen);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {
