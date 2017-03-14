@@ -10,8 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jetty.plus.webapp.EnvConfiguration;
-
 import model.AbstractBean;
 import util.Reflexao;
 import util.Result;
