@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.AbstractBean;
+import model.LoginBean;
 import util.Reflexao;
 import util.Result;
 
@@ -460,6 +461,15 @@ public class GenericDAO implements Serializable {
 			e.printStackTrace();
 		}finally{
 			ps.close();
+		}
+	}
+	
+	public void inserirUsuarioAdmin(){
+		if(listarTudo(new LoginBean())!=null && listarTudo(new LoginBean()).size()==0){
+			LoginBean usuario = new LoginBean();
+			usuario.setLogin("huntersadmin");
+			usuario.setSenha("testes12");
+			save(usuario);
 		}
 	}
 }
