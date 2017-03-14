@@ -76,13 +76,13 @@ public class Login extends WebPage{
 				String login = textLogin.getModelObject();
 				String senha = textSenha.getModelObject();
 				
-				info("Conexão:"+GenericDAO.getInstance().conn+" "+GenericDAO.getInstance().url);
-				info(""+GenericDAO.getInstance().user+ " "+ GenericDAO.getInstance().sen);
+				info("Conexão:"+GenericDAO.getInstance().conn);
 				target.add(feedbackPanel);
 				
 				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
 				boolean logou = false;
-				
+				info("size:"+listLogin!=null?listLogin.size():null);
+				target.add(feedbackPanel);
 				if(listLogin!=null && listLogin.size() > 0){
 					for(LoginBean lb : listLogin){
 						if((login != null && senha != null) && (!login.equals("") && !senha.equals("")) && (login.equals(lb.getLogin()) && senha.equals(lb.getSenha()))){
