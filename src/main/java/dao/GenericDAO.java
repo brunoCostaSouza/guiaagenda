@@ -70,7 +70,7 @@ public class GenericDAO implements Serializable {
 			r.setMsg("Adicionado com Sucesso");
 
 		} else {
-			//r.setMsg("Falha ao Adicionar " + tabela.getNomeTabela());
+			r.setMsg("Falha ao Adicionar " + tabela.getNomeTabela());
 		}
 
 		return r;
@@ -123,7 +123,7 @@ public class GenericDAO implements Serializable {
 	public <T extends AbstractBean<?>> List<T> listarTudo(T tabela) {
 
 		List<T> listObjects = new ArrayList<T>();
-		String sql = "SELECT " + tabela.getNomeColunasTabela(true) + " FROM "+ tabela.getNomeTabela();
+		String sql = "SELECT * FROM "+ tabela.getNomeTabela();
 
 		try {
 
@@ -406,6 +406,7 @@ public class GenericDAO implements Serializable {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.executeUpdate();
+			conn.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -425,6 +426,7 @@ public class GenericDAO implements Serializable {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.executeUpdate();
+			conn.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -444,6 +446,7 @@ public class GenericDAO implements Serializable {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.executeUpdate();
+			conn.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -463,6 +466,7 @@ public class GenericDAO implements Serializable {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.executeUpdate();
+			conn.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{

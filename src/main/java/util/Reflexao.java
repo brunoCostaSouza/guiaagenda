@@ -1,5 +1,6 @@
 package util;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
@@ -10,9 +11,9 @@ import anotations.Atributo;
 import anotations.Bean;
 import dao.GenericDAO;
 
-public class Reflexao {
+public class Reflexao implements Serializable{
+	private static final long serialVersionUID = 1L;
 
-	
 	public static String getPKNome(AbstractBean<?> object){
 		
 		Field[] atributos = getAtributosClass(object.getClass());
