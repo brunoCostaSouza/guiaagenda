@@ -317,6 +317,7 @@ public class GenericDAO implements Serializable {
 				Reflexao.completeStatement(statement, tabela, incluirPk);
 			}
 			if (statement.executeUpdate() == 1) {
+				conn.commit();
 				return true;
 			}
 		} catch (Exception e) {
