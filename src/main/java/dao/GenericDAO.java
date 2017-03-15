@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,9 +138,7 @@ public class GenericDAO implements Serializable {
 					for (int i = 1; i <= qtdColunas; i++) {
 						Object valorColuna = rs.getObject(i);
 						String nomeColuna = rs.getMetaData().getColumnName(i);
-						objeto.setValorAtributo(nomeColuna.substring(0, 1)
-								.toLowerCase() + nomeColuna.substring(1),
-								valorColuna);
+						objeto.setValorAtributo(nomeColuna.substring(0, 1).toLowerCase() + nomeColuna.substring(1),valorColuna);
 					}
 
 					listObjects.add((T) objeto);
@@ -329,11 +326,11 @@ public class GenericDAO implements Serializable {
 	private ResultSet executeSql(String sql) {
 
 		ResultSet resultSet;
-		Statement st;
+		PreparedStatement st;
 
 		try {
-			st = conn.createStatement();
-			resultSet = st.executeQuery(sql);
+			st = conn.prepareStatement(sql);
+			resultSet = st.executeQuery();
 			return resultSet;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -347,11 +344,11 @@ public class GenericDAO implements Serializable {
 
 		try {
 			ResultSet rset = conn.prepareStatement(sql).executeQuery();
-			
-			if(rset.next()){
-				r.setMsg("login:"+rset.getString("login"));
-				r.setMsg(r.getMsg()+"  senha:"+rset.getString("senha"));
+			int i = 0;
+			while(rset.next()){
+				i++;
 			}
+			r.setMsg("qtdUsers:"+i);
 			
 			return true;
 		} catch (Exception e) {

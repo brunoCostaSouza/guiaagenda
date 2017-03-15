@@ -78,14 +78,6 @@ public class Login extends WebPage{
 				String login = textLogin.getModelObject();
 				String senha = textSenha.getModelObject();
 				
-				Result r = GenericDAO.getInstance().inserirUsuarioAdmin();
-				
-				if(resultteste != null){
-					info("result:"+resultteste.getMsg());
-					info("r:"+r.getMsg());
-					target.add(feedbackPanel);
-				}
-				
 				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
 				boolean logou = false;
 				
