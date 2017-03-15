@@ -384,6 +384,7 @@ public class GenericDAO implements Serializable {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.executeUpdate();
+			conn.commit();
 			r.setMsg("Tabela Login criada com sucesso");
 		} catch (Exception e) {
 			e.printStackTrace();
