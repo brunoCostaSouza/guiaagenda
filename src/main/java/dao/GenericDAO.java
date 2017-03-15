@@ -122,14 +122,15 @@ public class GenericDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public <T extends AbstractBean<?>> List<T> listarTudo(T tabela) {
 
-		List<T> listObjects = new ArrayList<T>();
-		String sql = "SELECT * FROM "+ tabela.getNomeTabela();
+		List<T> listObjects = null;
+		String sql = "SELECT * FROM " + tabela.getNomeTabela();
 
 		try {
 
 			ResultSet rs = executeSql(sql);
 
 			if (rs != null) {
+				listObjects  = new ArrayList<T>();
 				while (rs.next()) {
 					AbstractBean<?> objeto = tabela.getClass().newInstance();
 
@@ -138,14 +139,12 @@ public class GenericDAO implements Serializable {
 					for (int i = 1; i <= qtdColunas; i++) {
 						Object valorColuna = rs.getObject(i);
 						String nomeColuna = rs.getMetaData().getColumnName(i);
-						objeto.setValorAtributo(nomeColuna.substring(0, 1).toLowerCase() + nomeColuna.substring(1),valorColuna);
+						objeto.setValorAtributo(nomeColuna.substring(0, 1).toLowerCase() + nomeColuna.substring(1), valorColuna);
 					}
 
 					listObjects.add((T) objeto);
 				}
 			}
-
-			return listObjects;
 
 		} catch (Exception e) {
 			e.printStackTrace();
