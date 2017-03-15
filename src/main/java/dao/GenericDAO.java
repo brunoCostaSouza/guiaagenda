@@ -482,4 +482,36 @@ public class GenericDAO implements Serializable {
 		}
 		return null;
 	}
+	
+	public List<LoginBean> getTodosUsuario() {
+		
+		String sql = "SELECT * FROM login";
+		
+		PreparedStatement ps = null;
+		List<LoginBean> list = new ArrayList<LoginBean>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				LoginBean bean = new LoginBean();
+				bean.setId(rs.getInt("Id"));
+				bean.setSenha(rs.getString("senha"));
+				bean.setLogin(rs.getString("login"));
+				list.add(bean);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
 }

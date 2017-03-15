@@ -19,6 +19,7 @@ import util.CreateDataBase;
 import util.CustomFeedbackPanel;
 import util.Result;
 import controller.CrudController;
+import dao.GenericDAO;
 
 public class Login extends WebPage{
 	private static final long serialVersionUID = 1L;
@@ -77,7 +78,7 @@ public class Login extends WebPage{
 				String login = textLogin.getModelObject();
 				String senha = textSenha.getModelObject();
 				
-				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
+				List<LoginBean> listLogin = GenericDAO.getInstance().getTodosUsuario();
 				boolean logou = false;
 				
 				info("size:"+listLogin!=null?listLogin.size():null);
