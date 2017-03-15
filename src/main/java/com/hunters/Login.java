@@ -84,8 +84,8 @@ public class Login extends WebPage{
 				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
 				boolean logou = false;
 				
-//				info("size:"+listLogin!=null?listLogin.size():null);
-//				target.add(feedbackPanel);
+				info("size:"+listLogin!=null?listLogin.size():null);
+				target.add(feedbackPanel);
 				
 				Result r = GenericDAO.getInstance().inserirUsuarioAdmin();
 				
