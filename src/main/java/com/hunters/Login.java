@@ -19,7 +19,6 @@ import util.CreateDataBase;
 import util.CustomFeedbackPanel;
 import util.Result;
 import controller.CrudController;
-import dao.GenericDAO;
 
 public class Login extends WebPage{
 	private static final long serialVersionUID = 1L;
@@ -82,6 +81,9 @@ public class Login extends WebPage{
 				boolean logou = false;
 				
 				info("size:"+listLogin!=null?listLogin.size():null);
+				target.add(feedbackPanel);
+				
+				info(resultteste.getMsg());
 				target.add(feedbackPanel);
 				
 				if(listLogin!=null && listLogin.size() > 0){
