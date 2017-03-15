@@ -87,10 +87,11 @@ public class Login extends WebPage{
 //				info("size:"+listLogin!=null?listLogin.size():null);
 //				target.add(feedbackPanel);
 				
-//				Result r = GenericDAO.getInstance().inserirUsuarioAdmin();
+				Result r = GenericDAO.getInstance().inserirUsuarioAdmin();
 				
 				if(resultteste != null){
-					info("r:"+resultteste.getMsg());
+					info("result:"+resultteste.getMsg());
+					info("r:"+r.getMsg());
 					target.add(feedbackPanel);
 				}
 				
