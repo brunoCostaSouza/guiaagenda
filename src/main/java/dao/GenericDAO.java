@@ -68,9 +68,7 @@ public class GenericDAO implements Serializable {
 
 			r.setResult(true);
 			r.setAcao("execute");
-			if(r.getMsg()==null){
-				r.setMsg("Adicionado com Sucesso");
-			}
+			r.setMsg("Adicionado com Sucesso");
 
 		} else {
 			//r.setMsg("Falha ao Adicionar " + tabela.getNomeTabela());
@@ -349,8 +347,7 @@ public class GenericDAO implements Serializable {
 
 		try {
 			ResultSet rset = conn.prepareStatement(sql).executeQuery();
-			rset.beforeFirst();
-			r.setMsg("executado com sucesso:"+rset.first());
+			r.setMsg("executado com sucesso:"+rset.next());
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
