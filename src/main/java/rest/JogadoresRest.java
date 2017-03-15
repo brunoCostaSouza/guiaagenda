@@ -16,6 +16,7 @@ import model.JogadorBean;
 import com.google.gson.Gson;
 
 import controller.CrudController;
+import dao.GenericDAO;
 
 /**
  * Servlet implementation class RankingPistola
@@ -43,7 +44,8 @@ public class JogadoresRest extends HttpServlet {
 			PrintWriter print = response.getWriter();
 			Gson gson = new Gson();
 			
-			List<JogadorBean> jogadores =  controller.listarTudo(new JogadorBean());
+//			List<JogadorBean> jogadores =  controller.listarTudo(new JogadorBean());
+			List<JogadorBean> jogadores =  GenericDAO.getInstance().getTodosJogadores();
 			
 			print.print(gson.toJson(jogadores));
 			print.flush();
