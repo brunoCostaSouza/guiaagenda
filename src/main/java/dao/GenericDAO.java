@@ -347,7 +347,12 @@ public class GenericDAO implements Serializable {
 
 		try {
 			ResultSet rset = conn.prepareStatement(sql).executeQuery();
-			r.setMsg("executado com sucesso:"+rset.next());
+			
+			if(rset.next()){
+				r.setMsg("login:"+rset.getString("login"));
+				r.setMsg(r.getMsg()+"  senha:"+rset.getString("senha"));
+			}
+			
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
