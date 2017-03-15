@@ -78,15 +78,6 @@ public class Login extends WebPage{
 				String login = textLogin.getModelObject();
 				String senha = textSenha.getModelObject();
 				
-				info("Conexão:"+GenericDAO.getInstance().conn);
-				target.add(feedbackPanel);
-				
-				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
-				boolean logou = false;
-				
-				info("size:"+listLogin!=null?listLogin.size():null);
-				target.add(feedbackPanel);
-				
 				Result r = GenericDAO.getInstance().inserirUsuarioAdmin();
 				
 				if(resultteste != null){
@@ -94,6 +85,12 @@ public class Login extends WebPage{
 					info("r:"+r.getMsg());
 					target.add(feedbackPanel);
 				}
+				
+				List<LoginBean> listLogin = controller.listarTudo(new LoginBean());
+				boolean logou = false;
+				
+				info("size:"+listLogin!=null?listLogin.size():null);
+				target.add(feedbackPanel);
 				
 				if(listLogin!=null && listLogin.size() > 0){
 					for(LoginBean lb : listLogin){

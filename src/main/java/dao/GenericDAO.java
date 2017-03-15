@@ -68,7 +68,9 @@ public class GenericDAO implements Serializable {
 
 			r.setResult(true);
 			r.setAcao("execute");
-			r.setMsg("Adicionado com Sucesso");
+			if(r.getMsg()==null){
+				r.setMsg("Adicionado com Sucesso");
+			}
 
 		} else {
 			//r.setMsg("Falha ao Adicionar " + tabela.getNomeTabela());
