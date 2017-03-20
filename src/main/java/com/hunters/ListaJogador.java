@@ -23,6 +23,7 @@ import org.apache.wicket.model.Model;
 
 import util.CustomFeedbackPanel;
 import controller.CrudController;
+import dao.GenericDAO;
 
 public class ListaJogador extends BasePage{
 	
@@ -48,7 +49,7 @@ public class ListaJogador extends BasePage{
 	public ListaJogador() {
 		super();
 		
-		listaJogador = controller.listarTudo(new JogadorBean());
+		listaJogador = GenericDAO.getInstance().getTodosJogadores();
 		add(formFiltro);
 		add(feedbackPanel);
 		

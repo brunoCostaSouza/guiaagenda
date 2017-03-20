@@ -555,22 +555,4 @@ public class GenericDAO implements Serializable {
 		return list;
 	}
 	
-	public void deleteLogins(){
-		String sql = "DELETE FROM login";
-		
-		PreparedStatement ps = null;
-		
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.execute();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			try {
-				ps.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-	}
 }

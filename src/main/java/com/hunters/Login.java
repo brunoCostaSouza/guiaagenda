@@ -81,18 +81,6 @@ public class Login extends WebPage{
 				List<LoginBean> listLogin = GenericDAO.getInstance().getTodosUsuario();
 				boolean logou = false;
 				
-				info("size:"+listLogin!=null?listLogin.size():null);
-				target.add(feedbackPanel);
-				
-				GenericDAO.getInstance().inserirUsuarioAdmin();
-				listLogin = GenericDAO.getInstance().getTodosUsuario();
-				
-				info("size2:"+listLogin!=null?listLogin.size():"null");
-				target.add(feedbackPanel);
-				
-				info(resultteste.getMsg());
-				target.add(feedbackPanel);
-				
 				if(listLogin!=null && listLogin.size() > 0){
 					for(LoginBean lb : listLogin){
 						if((login != null && senha != null) && (!login.equals("") && !senha.equals("")) && (login.equals(lb.getLogin()) && senha.equals(lb.getSenha()))){
