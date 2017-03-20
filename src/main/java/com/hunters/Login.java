@@ -84,10 +84,10 @@ public class Login extends WebPage{
 				info("size:"+listLogin!=null?listLogin.size():null);
 				target.add(feedbackPanel);
 				
-				GenericDAO.getInstance().deleteLogins();
+				GenericDAO.getInstance().inserirUsuarioAdmin();
 				listLogin = GenericDAO.getInstance().getTodosUsuario();
 				
-				info("size2:"+listLogin!=null?listLogin.size():null);
+				info("size2:"+listLogin!=null?listLogin.size():"null");
 				target.add(feedbackPanel);
 				
 				info(resultteste.getMsg());

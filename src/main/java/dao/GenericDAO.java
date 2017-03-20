@@ -484,8 +484,8 @@ public class GenericDAO implements Serializable {
 	public Result inserirUsuarioAdmin(){
 		if(listarTudo(new LoginBean())!=null && listarTudo(new LoginBean()).size()==0){
 			LoginBean usuario = new LoginBean();
-			usuario.setLogin("huntersadmin");
-			usuario.setSenha("testes12");
+			usuario.setLogin("bradmin");
+			usuario.setSenha("123456");
 			return persist(usuario);
 		}
 		return null;
