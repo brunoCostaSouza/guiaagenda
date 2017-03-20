@@ -17,6 +17,7 @@ import model.NoticiaBean;
 import com.google.gson.Gson;
 
 import controller.CrudController;
+import dao.GenericDAO;
 
 /**
  * Servlet implementation class RankingPistola
@@ -44,7 +45,7 @@ public class NoticiasRest extends HttpServlet {
 			PrintWriter print = response.getWriter();
 			Gson gson = new Gson();
 
-			List<NoticiaBean> noticias =  controller.listarTudo(new NoticiaBean());
+			List<NoticiaBean> noticias =  GenericDAO.getInstance().getTodasNoticias();
 			
 			Collections.reverse(noticias);
 			print.print(gson.toJson(noticias));

@@ -25,6 +25,7 @@ import org.apache.wicket.model.Model;
 
 import util.CustomFeedbackPanel;
 import controller.CrudController;
+import dao.GenericDAO;
 
 
 public class ListaNoticia extends BasePage{
@@ -51,7 +52,7 @@ public class ListaNoticia extends BasePage{
 	public ListaNoticia() {
 		super();
 		
-		listaNoticia = controller.listarTudo(new NoticiaBean());
+		listaNoticia = GenericDAO.getInstance().getTodasNoticias();
 		add(formFiltro);
 		add(feedbackPanel);
 		

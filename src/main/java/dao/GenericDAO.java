@@ -12,6 +12,7 @@ import java.util.List;
 import model.AbstractBean;
 import model.JogadorBean;
 import model.LoginBean;
+import model.NoticiaBean;
 import util.Reflexao;
 import util.Result;
 
@@ -539,6 +540,38 @@ public class GenericDAO implements Serializable {
 				bean.setCpf(rs.getString("cpf"));
 				bean.setNome(rs.getString("nome"));
 				bean.setId(rs.getInt("Id"));
+				list.add(bean);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+	
+	public List<NoticiaBean> getTodasNoticias() {
+		
+		String sql = "SELECT * FROM noticia";
+		
+		PreparedStatement ps = null;
+		List<NoticiaBean> list = new ArrayList<NoticiaBean>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				NoticiaBean bean = new NoticiaBean();
+				bean.setConteudo(rs.getString("conteudo"));
+				bean.setDataNoticia(rs.getString("dataNoticia"));
+				bean.setTitulo(rs.getString("titulo"));
 				list.add(bean);
 			}
 			
