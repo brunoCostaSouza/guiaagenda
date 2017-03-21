@@ -16,6 +16,7 @@ import model.JogadorRankingArcoBean;
 import com.google.gson.Gson;
 
 import controller.CrudController;
+import dao.GenericDAO;
 
 /**
  * Servlet implementation class RankingPistola
@@ -38,7 +39,7 @@ public class RankingArco extends HttpServlet {
 		PrintWriter print = response.getWriter();
 		Gson gson = new Gson();
 		
-		List<JogadorRankingArcoBean> jogadores =  controller.listarTudo(new JogadorRankingArcoBean());
+		List<JogadorRankingArcoBean> jogadores =  GenericDAO.getInstance().getRankingArcoFlecha();
 		
 		print.print(gson.toJson(jogadores));
 		print.flush();

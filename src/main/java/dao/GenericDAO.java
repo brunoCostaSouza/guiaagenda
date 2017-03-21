@@ -11,6 +11,8 @@ import java.util.List;
 
 import model.AbstractBean;
 import model.JogadorBean;
+import model.JogadorRankingArcoBean;
+import model.JogadorRankingFuzilBean;
 import model.JogadorRankingPistolaBean;
 import model.LoginBean;
 import model.NoticiaBean;
@@ -676,5 +678,73 @@ public class GenericDAO implements Serializable {
 		
 		return list;
 	}
+	
+	public List<JogadorRankingFuzilBean> getRankingFuzil() {
+		
+		String sql = "SELECT * FROM rankingfuzil";
+		
+		PreparedStatement ps = null;
+		List<JogadorRankingFuzilBean> list = new ArrayList<JogadorRankingFuzilBean>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				JogadorRankingFuzilBean bean = new JogadorRankingFuzilBean();
+				bean.setId(rs.getInt("Id"));
+				bean.setJogador(getJogadorPorId(rs.getInt("jogador")));
+				bean.setNome(rs.getString("nome"));
+				bean.setPontos(rs.getDouble("pontos"));
+				bean.setPosicao(rs.getInt("posicao"));
+				list.add(bean);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+
+	public List<JogadorRankingArcoBean> getRankingArcoFlecha() {
+	
+	String sql = "SELECT * FROM rankingarcoflecha";
+	
+	PreparedStatement ps = null;
+	List<JogadorRankingArcoBean> list = new ArrayList<JogadorRankingArcoBean>();
+	
+	try {
+		ps = conn.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()){
+			JogadorRankingArcoBean bean = new JogadorRankingArcoBean();
+			bean.setId(rs.getInt("Id"));
+			bean.setJogador(getJogadorPorId(rs.getInt("jogador")));
+			bean.setNome(rs.getString("nome"));
+			bean.setPontos(rs.getDouble("pontos"));
+			bean.setPosicao(rs.getInt("posicao"));
+			list.add(bean);
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		try {
+			ps.close();
+		} catch (Exception e2) {
+			e2.printStackTrace();
+		}
+	}
+	
+	return list;
+}
 	
 }
