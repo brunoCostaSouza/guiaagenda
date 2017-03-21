@@ -276,8 +276,13 @@ public class GenericDAO implements Serializable {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends AbstractBean<?>> T getObjeto(T tabela) {
 
+		if(tabela.getClass().equals(JogadorBean.class)){
+			return (T) getJogadorPorId(Integer.parseInt(tabela.getPK().toString()));
+		}
+		
 		String comandoSql = "SELECT " + tabela.getNomeColunasTabela(true)
 				+ " FROM " + tabela.getNomeTabela() + " WHERE "
 				+ tabela.getPKName() + " = " + "'" + tabela.getPK().toString()

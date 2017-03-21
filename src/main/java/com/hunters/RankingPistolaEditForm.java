@@ -1,5 +1,7 @@
 package com.hunters;
 
+import java.util.List;
+
 import model.AbstractBean;
 import model.JogadorBean;
 import model.JogadorRankingPistolaBean;
@@ -7,8 +9,13 @@ import model.JogadorRankingPistolaBean;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.IModel;
+
+import dao.GenericDAO;
 
 
 public class RankingPistolaEditForm extends EditForm{
@@ -61,6 +68,34 @@ public class RankingPistolaEditForm extends EditForm{
 		return textPosicao;
 	}
 	
+//	private DropDownChoice<JogadorRankingPistolaBean> criarDropDown(){
+//		
+//		IChoiceRenderer<JogadorBean> choice = new IChoiceRenderer() {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			public Object getDisplayValue(Object object) {
+//				JogadorBean table = (JogadorBean) object;
+//				return table.getStringChoice();
+//			}
+//			
+//			@Override
+//			public String getIdValue(Object object, int index) {
+//				JogadorBean table = (JogadorBean) object;
+//				return String.valueOf(table.getPK());
+//			}
+//
+//			@Override
+//			public Object getObject(String id, IModel choices) {
+//				object.setPK(Integer.parseInt(id));
+//				return controller.getObject(object);
+//			}
+//		};
+//		
+//		DropDownChoice<AbstractBean<?>> dropDown = new DropDownChoice("jogador", GenericDAO.getInstance().getTodosJogadores(), choice);
+//		dropDown.setOutputMarkupId(true);
+//		dropDown.setRequired(true);
+//	}
 	
 	
 	@Override
