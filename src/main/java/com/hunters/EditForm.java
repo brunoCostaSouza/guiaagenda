@@ -5,6 +5,7 @@ import intefaces.ICrudController;
 import java.util.List;
 
 import model.AbstractBean;
+import model.JogadorBean;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
@@ -167,6 +168,7 @@ public abstract class EditForm extends BasePage{
 		try {
 			
 			final AbstractBean object = table.getClass().newInstance();
+			
 			List<? extends AbstractBean> listObjects = controller.listarTudo(table.getClass().newInstance());
 			
 			IChoiceRenderer<AbstractBean<?>> choice = new IChoiceRenderer() {

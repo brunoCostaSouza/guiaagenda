@@ -21,6 +21,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 
 import util.CustomFeedbackPanel;
 import controller.CrudController;
+import dao.GenericDAO;
 
 public class ListaRankingPistola extends BasePage{
 	
@@ -44,7 +45,7 @@ public class ListaRankingPistola extends BasePage{
 	public ListaRankingPistola() {
 		super();
 		
-		listaJogadorPistolaPistola = controller.listarTudo(new JogadorRankingPistolaBean());
+		listaJogadorPistolaPistola = GenericDAO.getInstance().getRankingPistola();
 		add(formFiltro);
 		add(feedbackPanel);
 		

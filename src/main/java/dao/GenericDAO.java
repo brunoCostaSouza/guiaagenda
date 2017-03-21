@@ -11,6 +11,7 @@ import java.util.List;
 
 import model.AbstractBean;
 import model.JogadorBean;
+import model.JogadorRankingPistolaBean;
 import model.LoginBean;
 import model.NoticiaBean;
 import util.Reflexao;
@@ -124,6 +125,10 @@ public class GenericDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public <T extends AbstractBean<?>> List<T> listarTudo(T tabela) {
 
+		if(tabela.getNomeTabela().equals("jogador")){
+			return (List<T>) getTodosJogadores();
+		}
+		
 		List<T> listObjects = null;
 		String sql = "SELECT * FROM " + tabela.getNomeTabela();
 
@@ -559,6 +564,38 @@ public class GenericDAO implements Serializable {
 		return list;
 	}
 	
+	public JogadorBean getJogadorPorId(Integer id) {
+		
+		String sql = "SELECT * FROM jogador WHERE Id = ?";
+		
+		PreparedStatement ps = null;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()){
+				JogadorBean bean = new JogadorBean();
+				bean.setCpf(rs.getString("cpf"));
+				bean.setNome(rs.getString("nome"));
+				bean.setId(rs.getInt("Id"));
+				return bean;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
 	
 	/*
 	 * NOTICIA
@@ -581,6 +618,44 @@ public class GenericDAO implements Serializable {
 				bean.setConteudo(rs.getString("conteudo"));
 				bean.setDataNoticia(rs.getString("dataNoticia"));
 				bean.setTitulo(rs.getString("titulo"));
+				list.add(bean);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				ps.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+	
+	
+	/*
+	 * RANKING PISTOLA
+	 * */
+	public List<JogadorRankingPistolaBean> getRankingPistola() {
+		
+		String sql = "SELECT * FROM rankingpistola";
+		
+		PreparedStatement ps = null;
+		List<JogadorRankingPistolaBean> list = new ArrayList<JogadorRankingPistolaBean>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()){
+				JogadorRankingPistolaBean bean = new JogadorRankingPistolaBean();
+				bean.setId(rs.getInt("Id"));
+				bean.setJogador(getJogadorPorId(rs.getInt("jogador")));
+				bean.setNome(rs.getString("nome"));
+				bean.setPontos(rs.getDouble("pontos"));
+				bean.setPosicao(rs.getInt("posicao"));
 				list.add(bean);
 			}
 			
