@@ -492,6 +492,9 @@ public class GenericDAO implements Serializable {
 		return null;
 	}
 	
+	/*
+	 * LOGIN
+	 * */
 	public List<LoginBean> getTodosUsuario() {
 		
 		String sql = "SELECT * FROM login";
@@ -556,6 +559,11 @@ public class GenericDAO implements Serializable {
 		return list;
 	}
 	
+	
+	/*
+	 * NOTICIA
+	 * 
+	 * */
 	public List<NoticiaBean> getTodasNoticias() {
 		
 		String sql = "SELECT * FROM noticia";
@@ -569,6 +577,7 @@ public class GenericDAO implements Serializable {
 			
 			while(rs.next()){
 				NoticiaBean bean = new NoticiaBean();
+				bean.setId(rs.getInt("Id"));
 				bean.setConteudo(rs.getString("conteudo"));
 				bean.setDataNoticia(rs.getString("dataNoticia"));
 				bean.setTitulo(rs.getString("titulo"));
