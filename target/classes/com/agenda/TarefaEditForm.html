@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<wicket:extend>
+		<div class="right_col" role="main">
+			<div class="">
+				<div class="page-title">
+					<div class="title_left">
+						<h3>Notificações - Tarefas</h3>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="x_panel">
+							<div class="x_title">
+								<h2>Cadastro de Tarefa</h2>
+								<div class="clearfix"></div>
+							</div>
+							<div class="x_content">
+								<form class="form-horizontal form-label-left">
+									
+									<div class="row">
+										<div class="col-lg-3 "><label class="pull-right">Título <span class="required">*</span></label></div>
+				                        <div class="col-lg-5">
+				                          <input wicket:id="titulo" type="text" required="required" class="form-control">
+				                        </div>
+				                    </div>
+				                    <br>
+				                    <div class="row">
+										<div class="col-lg-3 "><label class="pull-right">Turma<span class="required">*</span></label></div>
+				                        <div class="col-lg-5">
+				                          <select wicket:id="turma" class="form-control"></select>
+				                        </div>
+				                    </div><br>
+				                    <div class="row">
+										<div class="col-lg-3 "><label class="pull-right">Disciplina<span class="required">*</span></label></div>
+				                        <div class="col-lg-5">
+				                          <select wicket:id="disciplina" class="form-control"></select>
+				                        </div>
+				                    </div><br>
+				                    <div class="row">
+										<div class="col-lg-3 "><label class="pull-right">Professor<span class="required">*</span></label></div>
+				                        <div class="col-lg-5">
+				                          <select wicket:id="professor" class="form-control"></select>
+				                        </div>
+				                    </div><br>
+				                    <div class="row">
+				                    	<div class="col-lg-3"><label class="pull-right">Descrição</label></div>
+				                    	<div class="col-lg-5">
+				                    		<textarea wicket:id="descricao" rows="10" cols="10" class="form-control"></textarea>
+				                    	</div>
+				                    </div><br><br>
+									<div class="ln_solid"></div>
+									<div class="form-group">
+										<div class="col-md-12 col-md-offset-5">
+											<button wicket:id="salvar" type="submit" class="btn btn-success">Salvar <i class="glyphicon glyphicon-ok"></i></button>
+											<button wicket:id="excluir"  class="btn btn-primary" type="button"> Excluir <i class="glyphicon glyphicon-refresh"></i></button>
+											<button wicket:id="voltar"  class="btn btn-primary" type="reset"> Cancelar <i class="glyphicon glyphicon-ban-circle"></i></button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
+</html>

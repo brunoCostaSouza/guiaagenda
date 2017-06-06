@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.AbstractBean;
 import anotations.Atributo;
@@ -32,7 +36,7 @@ public class Reflexao implements Serializable{
 	public static Object getPkValor(AbstractBean<?> object){
 		String nomePk = object.getPKName();
 		Object valor = getValorAtributo(object, nomePk);
-		if(valor == null)throw new RuntimeException("A classe:"+object.getClass().getSimpleName()+" não foi anotada para obter as informações da PK");
+//		if(valor == null)throw new RuntimeException("A classe:"+object.getClass().getSimpleName()+" não foi anotada para obter as informações da PK");
 		return valor;
 	}
 	
@@ -45,7 +49,7 @@ public class Reflexao implements Serializable{
 			for(Field attr : atributos){
 				Atributo anot = attr.getAnnotation(Atributo.class);
 				if(anot != null && anot.pk() && anot.nome().equals(nomePk)){
-					String nomeMetodo = "set"+nomePk.substring(0, 1)+nomePk.substring(1);
+					String nomeMetodo = "set"+nomePk.substring(0, 1).toUpperCase()+nomePk.substring(1);
 					Method metodo = getMetodoClass(object.getClass(), AbstractBean.class, nomeMetodo, attr.getType());
 					metodo.invoke(object, pk);
 				}
@@ -84,9 +88,9 @@ public class Reflexao implements Serializable{
 			Atributo anot = attr.getAnnotation(Atributo.class);
 			if(anot != null){
 				if(incluirPk){
-					nomeColunas += ","+anot.nome();
+					nomeColunas += ","+anot.nomeColuna();
 				}else if(!incluirPk && !anot.pk()){
-					nomeColunas += ","+anot.nome();
+					nomeColunas += ","+anot.nomeColuna();
 				}
 			}
 		}
@@ -111,10 +115,10 @@ public class Reflexao implements Serializable{
 			Atributo attr = fields[i].getAnnotation(Atributo.class);
 			if(attr != null){
 				if(incluirPk){
-					columns += "," + attr.nome();
+					columns += "," + attr.nomeColuna();
 					values += "," + "?";
 				}else if(!incluirPk && !attr.pk()){
-					columns += "," + attr.nome();
+					columns += "," + attr.nomeColuna();
 					values += "," + "?";
 				}
 			}
@@ -173,8 +177,8 @@ public class Reflexao implements Serializable{
 			Atributo column = fields[i].getAnnotation(Atributo.class);
 			
 			if(column != null){
-				if(column.nome() != null && !column.pk()){
-					string += "," + column.nome() + "=" + "?";
+				if(column.nomeColuna() != null && !column.pk()){
+					string += "," + column.nomeColuna() + "=" + "?";
 				}
 			}
 		}
@@ -235,15 +239,15 @@ public class Reflexao implements Serializable{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void setValorAtributo(AbstractBean<?> object, String nomeAtributo, Object valor){
+	public static void setValorAtributo(AbstractBean<?> object, String nomeColuna, Object valor){
 		
 		Class<?> metaClass = object.getClass();
 		Field[] atributos = getAtributosClass(metaClass);
 		
 		for(Field attr : atributos){
 			Atributo anot = attr.getAnnotation(Atributo.class);
-			if(anot!=null && anot.nome().equals(nomeAtributo)){
-				
+			if(anot!=null && anot.nomeColuna().equals(nomeColuna)){
+				String nomeTributo = anot.nome();
 				if(AbstractBean.class.isAssignableFrom(attr.getType())){
 					try {
 						Object fkClass = attr.getType().newInstance();
@@ -253,14 +257,28 @@ public class Reflexao implements Serializable{
 						
 						modelFk.setPK(valor);
 						modelFk = GenericDAO.getInstance().getObjeto(modelFk);
-						setAtributoMetodo(object, nomeAtributo, modelFk);
+						setAtributoMetodo(object, nomeTributo, modelFk);
 					} catch (Exception e) {
 						throw new RuntimeException("<SETOBJECTBYTABLENAME>FAil to instance a class");
 					}
 				}else{
 					try {
-						Class<?> converter = Class.forName(attr.getType().getName());
-						setAtributoMetodo(object, nomeAtributo, converter.cast(valor));
+						if(valor!=null){
+							Class<?> converter = Class.forName(attr.getType().getName());
+							if(converter.equals(Date.class)){
+								if(valor!=null && !valor.equals("")){
+									try {
+							            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+							             Date date = (java.util.Date)valor;
+							             setAtributoMetodo(object, nomeTributo, date);
+							        } catch (Exception e) {            
+							            e.printStackTrace();
+							        }
+								}
+							}else{
+								setAtributoMetodo(object, nomeTributo, converter.cast(valor));
+							}
+						}
 						break;
 					} catch (ClassNotFoundException e) {
 						throw new RuntimeException("Não foi encontrado a class:"+attr.getType().getName());

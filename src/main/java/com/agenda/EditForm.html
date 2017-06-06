@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org" lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+<wicket:extend>
+	<form wicket:id="editForm">
+		<wicket:child />
+	
+		<div class="form-group col-md-8">
+			<div onclick="mensagem();" wicket:id="feedback" role="alert"></div>
+		</div>
+		<div id="actions" class="row">
+		 	<div class="col-md-12">
+<!-- 			  	<a wicket:id="salvar" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Salvar</a> -->
+<!-- 			  	<a wicket:id="excluir" class="btn btn-success"><i class="glyphicon glyphicon-trash"></i> Excluir</a> -->
+<!-- 			   	<a wicket:id="voltar" class="btn btn-default"> Voltar</a> -->
+		 	</div>
+		</div>
+	</form>
+	<script src="bootstrap/js/notify.min.js"></script>
+</wicket:extend>
+</body>
+</html>
