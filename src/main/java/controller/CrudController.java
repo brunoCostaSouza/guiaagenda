@@ -28,8 +28,8 @@ public class CrudController implements ICrudController, Serializable{
 	}
 
 	@Override
-	public <T extends AbstractBean<?>> List<T> listarTudo(T tabela) {
-		return GenericDAO.getInstance().listarTudo(tabela);
+	public <T extends AbstractBean<?>> List<T> searchAll(T tabela) {
+		return GenericDAO.getInstance().searchAll(tabela);
 	}
 
 	@Override
@@ -50,5 +50,20 @@ public class CrudController implements ICrudController, Serializable{
 	@Override
 	public <T extends AbstractBean<?>> T searchSemAspas(T tabela, String nomeColuna, Object valorPesquisa) {
 		return GenericDAO.getInstance().searchSemAspas(tabela, nomeColuna, valorPesquisa);
+	}
+
+	@Override
+	public <T extends AbstractBean<?>> T search(T tabela, String[] colunas, String[] valores) {
+		return GenericDAO.getInstance().search(tabela, colunas, valores);
+	}
+	
+	@Override
+	public Long notifications(String cpf) {
+		return GenericDAO.getInstance().notifications(cpf);
+	}
+	
+	@Override
+	public void atualizarNotificacoes(String cpf) {
+		GenericDAO.getInstance().atualizarNotificacoes(cpf);
 	}
 }
