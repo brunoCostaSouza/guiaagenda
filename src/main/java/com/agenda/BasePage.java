@@ -1,21 +1,32 @@
 package com.agenda;
 
+<<<<<<< HEAD
 import java.io.Serializable;
 
+=======
+>>>>>>> origin/master
 import model.AbstractBean;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+<<<<<<< HEAD
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+=======
+>>>>>>> origin/master
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 
+<<<<<<< HEAD
 import com.agenda.tarefa.ListarTarefas;
 
 
 public abstract class BasePage extends WebPage implements Serializable{
+=======
+
+public abstract class BasePage extends WebPage{
+>>>>>>> origin/master
 	private static final long serialVersionUID = 1L;
 	
 	public static final int CASO_USO_INCLUIR 	= 1;
@@ -25,7 +36,10 @@ public abstract class BasePage extends WebPage implements Serializable{
 	
 	public AjaxSubmitLink linkFiltro;
 	public TextField<?> textFieldPesquisa;
+<<<<<<< HEAD
 	private ModalWindow modalForm;
+=======
+>>>>>>> origin/master
 	
 	public abstract AjaxLink<String> criarLinkExcluir(final AbstractBean<?> table);
 	public abstract Link<String> criarLinkEditar(final AbstractBean<?> table);
@@ -39,12 +53,16 @@ public abstract class BasePage extends WebPage implements Serializable{
 //			setResponsePage(Login.class);
 //			return;
 //		}
+<<<<<<< HEAD
 		
 		/**
 		 * Serão adicionados os Links para as listagens
 		 */
 		add(criarLinkTarefa());
 //		add(criarModalPadrao());
+=======
+		add(criarLinkTarefa());
+>>>>>>> origin/master
 	}
 	
 	private AjaxLink<Void> criarLinkTarefa(){
@@ -60,6 +78,7 @@ public abstract class BasePage extends WebPage implements Serializable{
 		return linkTarefa;
 	}
 	
+<<<<<<< HEAD
 //	private ModalWindow criarModalPadrao(){
 //		modalForm = new ModalWindow("modalPadrao");
 //		modalForm.setOutputMarkupId(true);
@@ -71,5 +90,7 @@ public abstract class BasePage extends WebPage implements Serializable{
 //		return modalForm;
 //	}
 	
+=======
+>>>>>>> origin/master
 	
 }

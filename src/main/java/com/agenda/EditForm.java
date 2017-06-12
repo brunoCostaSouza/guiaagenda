@@ -9,7 +9,10 @@ import model.AbstractBean;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+<<<<<<< HEAD:src/main/java/com/agenda/EditForm.java
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+=======
+>>>>>>> origin/master:src/main/java/com/agenda/EditForm.java
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.DropDownChoice;
