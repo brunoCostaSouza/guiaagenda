@@ -36,7 +36,6 @@ public class ListarTarefas extends BasePage  implements Serializable{
 		Collections.reverse(list);
 		add(criarDivListaTarefa());
 		add(criarLinkNovo());
-		
 //		add(criarEditPanel());
 	}
 	

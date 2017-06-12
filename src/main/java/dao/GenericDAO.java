@@ -412,7 +412,6 @@ public class GenericDAO implements Serializable {
 		}
 		return null;
 	}
-<<<<<<< HEAD
 	
 	private void executeSqlInsert(String sql){
 		PreparedStatement st;
@@ -425,8 +424,4 @@ public class GenericDAO implements Serializable {
 		}
 	}
 
-=======
-
-	
->>>>>>> origin/master
 }

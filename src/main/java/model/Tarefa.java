@@ -6,11 +6,7 @@ import java.util.Date;
 import anotations.Atributo;
 import anotations.Bean;
 
-<<<<<<< HEAD
 import com.agenda.tarefa.ListarTarefas;
-=======
-import com.agenda.ListarTarefas;
->>>>>>> origin/master
 
 @Bean(nome="tarefa")
 public class Tarefa extends AbstractBean<Integer> implements Serializable{
@@ -144,11 +140,7 @@ public class Tarefa extends AbstractBean<Integer> implements Serializable{
 		this.professor = null;
 		this.descricao = null;
 		this.turma = null;
-<<<<<<< HEAD
 		this.dataCadastro = new Date();
-=======
-		this.dataCadastro = null;
->>>>>>> origin/master
 		this.dataEntrega = null;
 	}
 

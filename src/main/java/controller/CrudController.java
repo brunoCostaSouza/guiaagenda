@@ -52,7 +52,6 @@ public class CrudController implements ICrudController, Serializable{
 		return GenericDAO.getInstance().searchSemAspas(tabela, nomeColuna, valorPesquisa);
 	}
 
-<<<<<<< HEAD
 	@Override
 	public <T extends AbstractBean<?>> T search(T tabela, String[] colunas, String[] valores) {
 		return GenericDAO.getInstance().search(tabela, colunas, valores);
@@ -67,6 +66,4 @@ public class CrudController implements ICrudController, Serializable{
 	public void atualizarNotificacoes(String cpf) {
 		GenericDAO.getInstance().atualizarNotificacoes(cpf);
 	}
-=======
->>>>>>> origin/master
 }
